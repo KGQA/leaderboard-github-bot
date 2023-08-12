@@ -14,8 +14,8 @@ load_dotenv()
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",
-    "http://localhost:8080",
+    "http://localhost:5173/leaderboard",
+    "https://artur-galstyan.github.io/leaderboard/",
 ]
 
 app.add_middleware(

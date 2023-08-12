@@ -7,17 +7,7 @@ services:
     volumes:
       - .:/app 
     expose:
-      - 8888
-    env_file:
-      - .env
-  app2:
-    build:
-      context: .
-      dockerfile: Dockerfile.app
-    volumes:
-      - .:/app 
-    expose:
-      - 8888
+      - 8000
     env_file:
       - .env
   nginx:
@@ -31,4 +21,4 @@ services:
       - "443:443"
     depends_on:
       - app1
-      - app2
+
