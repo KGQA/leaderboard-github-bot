@@ -49,6 +49,7 @@ class NewLeaderboard(BaseModel):
 
 
 class PullRequest(BaseModel):
+    title: str
     newColumns: list[NewColumn]
     newRows: list[NewRow]
     changedRows: list[ChangedRow]
@@ -154,7 +155,7 @@ async def make_pull_request(pull_request: PullRequest):
         "Authorization": f"Bearer {os.environ['GITHUB_ACCESS_TOKEN']}",
     }
     body = {
-        "title": "New changes",
+        "title": f"New changes | {pull_request.title}",
         "body": issue_body,
     }
 
