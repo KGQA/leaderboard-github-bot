@@ -15,7 +15,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173/leaderboard",
-    "https://artur-galstyan.github.io/leaderboard/",
+    "https://kgqa.github.io/leaderboard/",
 ]
 
 app.add_middleware(
@@ -57,7 +57,7 @@ class PullRequest(BaseModel):
 
 
 GITHUB_API_URL = "https://api.github.com"
-REPO_OWNER = "Artur-Galstyan"
+REPO_OWNER = "KGQA"
 REPO_NAME = "leaderboard"
 
 
@@ -102,7 +102,7 @@ async def make_pull_request(pull_request: PullRequest):
     for dataset, dataset_changes in changes.items():
         database, datasetname = dataset.split("/")
         req = httpx.get(
-            f"https://raw.githubusercontent.com/Artur-Galstyan/leaderboard/main/{database}/{datasetname}.md"
+            f"https://raw.githubusercontent.com/{REPO_OWNER}/{REPO_NAME}/main/{database}/{datasetname}.md"
         )
         response_text = req.text
         response_text = response_text.split("---\n")[-1]
