@@ -8,6 +8,7 @@ import json
 from typing import Union
 import os
 from dotenv import load_dotenv
+from fastapi.responses import JSONResponse
 
 load_dotenv()
 
@@ -61,6 +62,16 @@ REPO_OWNER = "KGQA"
 REPO_NAME = "leaderboard"
 
 
+@app.options("/make_pull_request")
+def manual_cors_options():
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range",
+    }
+    return JSONResponse(content={}, headers=headers)
+
+
 @app.post("/make_pull_request")
 async def make_pull_request(pull_request: PullRequest):
     issue_body = ""
@@ -102,7 +113,7 @@ async def make_pull_request(pull_request: PullRequest):
     for dataset, dataset_changes in changes.items():
         database, datasetname = dataset.split("/")
         req = httpx.get(
-            f"https://raw.githubusercontent.com/{REPO_OWNER}/{REPO_NAME}/main/{database}/{datasetname}.md"
+            f"https://raw.githubusercontent.com/{REPO_OWNER}/{REPO_NAME}/v2.0/{database}/{datasetname}.md"
         )
         response_text = req.text
         response_text = response_text.split("---\n")[-1]
